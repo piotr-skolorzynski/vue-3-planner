@@ -38,10 +38,7 @@ export default {
     },
     handleComplete(id) {
       const proj = this.projects.find((project) => project.id === id);
-      console.log(proj);
       proj.complete = !proj.complete;
-
-      console.log(proj);
     },
   },
 };
