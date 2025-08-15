@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="handleUpdate">
     <label for="title">Title:</label>
     <input id="title" type="text" required v-model="title" />
 
@@ -28,6 +28,20 @@ export default {
         this.details = data.details;
       })
       .catch((error) => console.log(error));
+  },
+  methods: {
+    handleUpdate() {
+      fetch(this.uri, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: this.title,
+          details: this.details,
+        }),
+      })
+        .then(() => this.$router.push('/'))
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
