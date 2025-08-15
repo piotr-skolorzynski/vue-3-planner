@@ -1,10 +1,10 @@
 <template>
   <div class="project">
-    <div class="actions" @click="toggleDetails">
+    <div class="actions" @click.self="toggleDetails">
       <h3>{{ project.title }}</h3>
       <div class="icons">
         <span class="material-icons"> edit </span>
-        <span class="material-icons"> delete </span>
+        <span class="material-icons" @click="deleteProject"> delete </span>
         <span class="material-icons"> done </span>
       </div>
     </div>
@@ -19,12 +19,18 @@ export default {
   props: ['project'],
   data() {
     return {
+      uri: `http://localhost:3000/projects/${this.project.id}`,
       showDetails: false,
     };
   },
   methods: {
     toggleDetails() {
       this.showDetails = !this.showDetails;
+    },
+    deleteProject() {
+      fetch(this.uri, {
+        method: 'DELETE',
+      }).then(() => this.$emit('delete', this.project.id));
     },
   },
 };
